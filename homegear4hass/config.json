@@ -1,0 +1,43 @@
+{
+    "name": "Homegear4Hass",
+    "version": "1.0",
+    "slug": "homegear4hass",
+    "description": "Homegear as a Hassio add-on incl. hmland",
+    "advanced": true,
+    "hassio_api": true,
+    "hassio_role": "admin",
+    "docker_api": true,
+    "arch": ["aarch64", "amd64"],
+    "startup": "services",
+    "boot": "auto",
+    "webui": "http://[HOST]:[PORT:2001]/admin",
+    "uart":"true",
+    "gpio": true,
+    "usb": true,
+    "devices": ["/dev/hidraw0",
+                "/dev/bus/usb"],
+    "devicetree": true,
+    "udev": true,
+    "privileged": [
+      "SYS_ADMIN",
+      "SYS_RAWIO",
+      "SYS_RESOURCE"
+    ],
+    "full_access": true,
+    "apparmor": false,
+    "map": ["config:rw", "share:rw", "ssl:rw"],
+    "ports": {
+      "2001/tcp": 2001,
+      "2002/tcp": 2002,
+      "2003/tcp": 2003,
+      "2004/tcp": 2004
+    },
+    "environment": {
+    },
+    "options": {
+      "device": null
+    },
+    "schema": {
+      "device": "device(subsystem=tty)"
+    }
+  }

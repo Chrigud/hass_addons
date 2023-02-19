@@ -1,0 +1,36 @@
+FROM debian:bullseye-slim
+LABEL maintainer="Chrigud"
+RUN apt-get update && apt-get -y install apt-transport-https wget ca-certificates apt-utils gnupg libzip4 libavahi-client3 libavahi-client-dev insserv locales lsb-release
+RUN apt-get install nano
+RUN apt-get install -y libusb-1.0-0-dev build-essential git
+RUN \
+    touch /tmp/HOMEGEAR_STATIC_INSTALLATION; \
+    touch /.dockerenv; \
+    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen; \
+    locale-gen; \
+    wget https://apt.homegear.eu/Release.key && apt-key add Release.key && rm Release.key; \
+    echo 'deb https://apt.homegear.eu/debian/bullseye/homegear/stable/ bullseye main' >> /etc/apt/sources.list.d/homegear.list; \
+    apt-get update && apt-get -y install libhomegear-node homegear homegear-management homegear-webssh homegear-adminui homegear-ui homegear-nodes-core homegear-nodes-extra homegear-homematicbidcos homegear-homematicwired homegear-insteon homegear-max homegear-philipshue homegear-sonos homegear-kodi homegear-beckhoff homegear-knx homegear-enocean homegear-intertechno homegear-mbus homegear-zwave homegear-zigbee homegear-ccu homegear-influxdb; \
+    rm -f /etc/homegear/dh1024.pem; \
+    rm -f /etc/homegear/homegear.crt; \
+    rm -f /etc/homegear/homegear.key; \
+    mv /etc/homegear /etc/homegear.config; \
+    mv /var/lib/homegear /var/lib/homegear.data; \
+    git clone https://git.zerfleddert.de/git/hmcfgusb /etc/hmcfgusb; \
+    cd /etc/hmcfgusb; \
+    make; \
+    sudo cp /etc/hmcfgusb/hmcfgusb.rules /etc/udev/rules.d/; \
+    rm *.h *.o *.c *.d; \
+    mv /etc/hmcfgusb /etc/hmcfgusb.data; \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+ENTRYPOINT ["/bin/bash", "-c", "/start.sh"]
+
+EXPOSE 80 443 2001 2002 2003
