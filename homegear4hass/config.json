@@ -1,6 +1,6 @@
 {
     "name": "Homegear4Hass",
-    "version": "1.0",
+    "version": "1.0.1",
     "slug": "homegear4hass",
     "description": "Homegear as a Hassio add-on incl. hmland",
     "advanced": true,
@@ -35,9 +35,7 @@
     "environment": {
     },
     "options": {
-      "device": null
     },
     "schema": {
-      "device": "device(subsystem=tty)"
     }
   }
