@@ -20,6 +20,18 @@ then
 	echo "Create config dir"
 fi
 
+if ! [ -d "/config/log" ]
+then
+	mkdir /config/log
+	echo "Create log dir"
+fi
+
+if ! [ -d "/config/log/homegear" ]
+then
+	mkdir /config/log/homegear
+	echo "Create homegear log dir"
+fi
+
 if ! [ -d "/share/homegear" ]
 then
 	mkdir /share/homegear
@@ -51,7 +63,8 @@ USER_GID=${HOST_USER_GID:=$USER_GID}
 
 ln -nfs /config/homegear /etc/homegear
 ln -nfs /share/homegear /var/lib/homegear
-ln -nfs /data/homegear/log /var/log/homegear
+# ln -nfs /data/homegear/log /var/log/homegear
+ln -nfs /config/log/homegear /var/log/homegear
 
 
 
