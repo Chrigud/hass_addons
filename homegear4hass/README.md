@@ -15,21 +15,10 @@ Feel free to use the addon, but keep in mind it comes absolutely without warrant
 3. At first boot, the Addon creates a homegear directory in your config folder. You have to configure it like a stand alone homegear system.
 3. a. Enable the webserver (in rcpservers.conf). Enable the webserver in port 2001 and disable RPC on that port.
 3. b. If you want to use the HM-CFG-USB 2 stick, add the HM-CFG-USB configuration to families/homematicbidcos.conf (see below). Then you can add the hmcfglan type to HomematicBidcos with the hmland ID. You may also want to set centralAddress and rfKey. If you come from an existing setup, it is important to reuse the same rfKey if devices are already paired. If you want to switch to a new key, you must define oldRfKey!
+3. c. If you want to use the MAX!Cube as CUNX (with a-culfw), use the CUNX configuration below. You may also change centralAddress, but be careful if devices are paired with a different central address.
 4. Restart the addon
-5. a. For communicaton with hass, add a CCU config to your /config/configuration.yaml (Includeing the Port 2001 for RPC Communication)
-5. b. One can also enable MQTT (in mqtt.conf) and then setup the devices with the MQTT plugin and device IDs.
-
-# HM-CFG-USB
-#######################################
-############# HM-CFG-USB ##############
-#######################################
-[HM-CFG-USB]
-id = hmland
-#default = true
-deviceType = hmcfglan
-host = 127.0.0.1
-port = 1234
-responseDelay = 60
+5. a. For communicaton with hass, add a CCU config to your /config/configuration.yaml (Includeing the Port 2002 for RPC Communication)
+5. b. One can also enable MQTT (in mqtt.conf) and then setup the devices with the MQTT plugin and device IDs. You probably also need to set the IP in brokerHostname. And set the username and password for protection.
 
 # WebGui
 
@@ -41,6 +30,34 @@ You can't use the CLI Configuration. You can add devices via ADMIN-UI (tested wi
 
 # Examples
 
+#### HM-CFG-USB - families/homematicbidcos.conf
+```conf
+#######################################
+############# HM-CFG-USB ##############
+#######################################
+[HM-CFG-USB]
+id = hmland
+#default = true
+deviceType = hmcfglan
+host = <ip>
+port = 1234
+responseDelay = 60
+```
+
+```conf
+#### CUNX - MAX - families/max.conf
+#######################################
+################ CUNX  ################
+#######################################
+[CUNX]
+id = CUL_MAX
+default = true
+deviceType = cunx
+host = <ip>
+port = 2323
+responseDelay = 40
+```
+
 #### configuration.yaml
 
 ```yaml
@@ -50,5 +67,5 @@ homematic:
     wireless:
       host: 10.4.4.113
       resolvenames: metadata
-      port: 2001
+      port: 2002
 ```
