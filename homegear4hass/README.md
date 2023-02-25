@@ -19,6 +19,7 @@ Feel free to use the addon, but keep in mind it comes absolutely without warrant
 4. Restart the addon
 5. a. For communicaton with hass, add a CCU config to your /config/configuration.yaml (Includeing the Port 2002 for RPC Communication)
 5. b. One can also enable MQTT (in mqtt.conf) and then setup the devices with the MQTT plugin and device IDs. You probably also need to set the IP in brokerHostname. And set the username and password for protection.
+6. A nice addition to homegear is the Homematic-Manager, which can access homegear and the devices via RPC and offers additional functionality (e.g. configure shutter reference running time). It requires RPC port 2001 to be active.
 
 # WebGui
 
