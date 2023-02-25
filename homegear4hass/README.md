@@ -13,9 +13,23 @@ Feel free to use the addon, but keep in mind it comes absolutely without warrant
 1. Add this repo to your HASS Repomanager (Write the repo URL in lowercase and don't use Captial letters)
 2. Install the Plugin and start it (There are no HASSIO Addon Configuration parameters yet)
 3. At first boot, the Addon creates a homegear directory in your config folder. You have to configure it like a stand alone homegear system.
+3. a. Enable the webserver (in rcpservers.conf). Enable the webserver in port 2001 and disable RPC on that port.
+3. b. If you want to use the HM-CFG-USB 2 stick, add the HM-CFG-USB configuration to families/homematicbidcos.conf (see below). Then you can add the hmcfglan type to HomematicBidcos with the hmland ID. You may also want to set centralAddress and rfKey. If you come from an existing setup, it is important to reuse the same rfKey if devices are already paired. If you want to switch to a new key, you must define oldRfKey!
 4. Restart the addon
-5. For communicaton with hass, add a CCU config to your /config/configuration.yaml (Includeing the Port 2001 for RPC Communication)
-6. (optional) Alternatively one can also access the devices via MQTT
+5. a. For communicaton with hass, add a CCU config to your /config/configuration.yaml (Includeing the Port 2001 for RPC Communication)
+5. b. One can also enable MQTT (in mqtt.conf) and then setup the devices with the MQTT plugin and device IDs.
+
+# HM-CFG-USB
+#######################################
+############# HM-CFG-USB ##############
+#######################################
+[HM-CFG-USB]
+id = hmland
+#default = true
+deviceType = hmcfglan
+host = 127.0.0.1
+port = 1234
+responseDelay = 60
 
 # WebGui
 
